@@ -1,0 +1,18 @@
+name: Raven
+version: '${project.version}'
+main: me.darkwinged.raven.Raven
+api-version: 1.19
+authors: [ darkwinged ]
+description: The main plugin for the Raven Network
+commands:
+  rank:
+    description: "Allows admins to set a users rank"
+  cache:
+    description: "Allows admins to manage the caches"
+  friend:
+    description: "Allows players to add friends"
+    aliases: [ f ]
+  block:
+    description: "Allows players to block other players"
+  unblock:
+      description: "Allows players to unblock other players"
