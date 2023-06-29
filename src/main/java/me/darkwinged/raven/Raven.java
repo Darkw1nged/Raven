@@ -1,12 +1,12 @@
 package me.darkwinged.raven;
 
-import me.darkwinged.raven.Commands.*;
-import me.darkwinged.raven.Stuts.User;
-import me.darkwinged.raven.Utilites.DataCache;
-import me.darkwinged.raven.Utilites.RavenAPI;
-import me.darkwinged.raven.Utilites.Storage.SQLTables;
-import me.darkwinged.raven.Utilites.Storage.SQLibrary;
-import me.darkwinged.raven.Utilites.Tasks.OfflinePlayerSave;
+import me.darkwinged.raven.commands.*;
+import me.darkwinged.raven.struts.User;
+import me.darkwinged.raven.utilites.DataCache;
+import me.darkwinged.raven.utilites.RavenAPI;
+import me.darkwinged.raven.utilites.storage.SQLTables;
+import me.darkwinged.raven.utilites.storage.SQLibrary;
+import me.darkwinged.raven.utilites.tasks.OfflinePlayerSave;
 import me.darkwinged.raven.listeners.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -44,20 +44,22 @@ public final class Raven extends JavaPlugin {
     }
 
     private void loadCommands() {
-        getCommand("cache").setExecutor(new cacheCommand());
-        getCommand("rank").setExecutor(new rankCommand());
-        getCommand("block").setExecutor(new blockCommand());
-        getCommand("unblock").setExecutor(new unblockCommand());
-        getCommand("friend").setExecutor(new friendCommand());
+        // Complete
+        getCommand("cache").setExecutor(new CacheCommand());
+        getCommand("rank").setExecutor(new RankCommand());
+        getCommand("block").setExecutor(new BlockCommand());
+        getCommand("unblock").setExecutor(new UnblockCommand());
+        // Incomplete
+        getCommand("friend").setExecutor(new FriendCommand());
     }
 
     private void loadEvents() {
         Arrays.asList(
-                new loadUser(),
-                new forceSlot(),
-                new disableEvents(),
-                new mythicCache()
-                ,new tester()
+                new LoadUser(),
+                new ForceSlot(),
+                new DisableEvents(),
+                new MythicCache()
+                ,new Tester()
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 
@@ -76,7 +78,7 @@ public final class Raven extends JavaPlugin {
             Map.Entry<UUID, User> entry = iterator.next();
 
             User user = entry.getValue();
-            user.setLast_seen(LocalDateTime.now()); // Set the last seen time to now
+            user.setLastSeen(LocalDateTime.now()); // Set the last seen time to now
             iterator.remove(); // Safely remove the user from the map
             RavenAPI.saveUser(user); // Save the user to the database
         }
